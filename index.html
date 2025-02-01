@@ -1,387 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Primary Meta Tags -->
-    <title>QS Encoder/Decoder - Convert Query Strings and URLs</title>
-    <meta name="title" content="QS Encoder/Decoder - Convert Query Strings and URLs">
-    <meta name="description" content="Free online tool to encode and decode query strings and URLs. Convert between JSON and query string formats easily with this web utility.">
-    <meta name="keywords" content="query string,qs, encode, decode, JSON to query string, query string to json, web development tools, QS library, online encoder decoder">
-    <meta name="author" content="Daniel Smith">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://d4n5h.github.io/qs-encode-decode/">
-    <meta property="og:title" content="QS Encoder/Decoder - Convert Query Strings and URLs">
-    <meta property="og:description" content="Free online tool to encode and decode query strings and URLs. Convert between JSON and query string formats easily with this web utility.">
-    <meta property="og:image" content="https://d4n5h.github.io/qs-encode-decode/images/icon.png">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://d4n5h.github.io/qs-encode-decode/">
-    <meta property="twitter:title" content="QS Encoder/Decoder - Convert Query Strings and URLs">
-    <meta property="twitter:description" content="Free online tool to encode and decode query strings and URLs. Convert between JSON and query string formats easily with this web utility.">
-    <meta property="twitter:image" content="https://d4n5h.github.io/qs-encode-decode/images/icon.png">
+		<title>QS Encoder/Decoder - Convert Query Strings and URLs</title>
+		<meta
+			name="title"
+			content="QS Encoder/Decoder - Convert Query Strings and URLs"
+		/>
+		<meta
+			name="description"
+			content="Free online tool to encode and decode query strings and URLs. Convert between JSON and query string formats easily with this web utility."
+		/>
+		<meta
+			name="keywords"
+			content="query string,qs, encode, decode, JSON to query string, query string to json, web development tools, QS library, online encoder decoder"
+		/>
+		<meta name="author" content="Daniel S" />
+		<meta name="robots" content="index, follow" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
-    <link rel="manifest" href="./manifest.json">
-    
-    <!-- Canonical URL -->
-    <meta rel="canonical" href="https://d4n5h.github.io/qs-encode-decode/">
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta
+			property="og:url"
+			content="https://d4n5h.github.io/qs-encode-decode/"
+		/>
+		<meta
+			property="og:title"
+			content="QS Encoder/Decoder - Convert Query Strings and URLs"
+		/>
+		<meta
+			property="og:description"
+			content="Free online tool to encode and decode query strings and URLs. Convert between JSON and query string formats easily with this web utility."
+		/>
+		<meta
+			property="og:image"
+			content="https://d4n5h.github.io/qs-encode-decode/assets/images/icon.png"
+		/>
 
-    <!-- Add language directive -->
-    <meta http-equiv="Content-Language" content="en">
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta
+			property="twitter:url"
+			content="https://d4n5h.github.io/qs-encode-decode/"
+		/>
+		<meta
+			property="twitter:title"
+			content="QS Encoder/Decoder - Convert Query Strings and URLs"
+		/>
+		<meta
+			property="twitter:description"
+			content="Free online tool to encode and decode query strings and URLs. Convert between JSON and query string formats easily with this web utility."
+		/>
+		<meta
+			property="twitter:image"
+			content="https://d4n5h.github.io/qs-encode-decode/assets/images/icon.png"
+		/>
 
-    <!-- SEO Enhancements -->
-    <meta name="revisit-after" content="7 days">
-    <meta name="rating" content="general">
+		<!-- Favicon -->
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="./assets/images/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="./assets/images/favicon-16x16.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="./assets/images/apple-touch-icon.png"
+		/>
+		<link rel="manifest" href="./manifest.json" />
 
-    <script src="https://cdn.jsdelivr.net/npm/qs@latest/dist/qs.min.js"></script>
-    <style>
-        :root {
-            --primary-color: #4a90e2;
-            --background-color: #f5f7fa;
-            --text-color: #333;
-        }
+		<!-- Canonical URL -->
+		<link
+			rel="canonical"
+			href="https://d4n5h.github.io/qs-encode-decode/"
+		/>
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
+		<!-- Add language directive -->
+		<meta http-equiv="Content-Language" content="en" />
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+		<!-- SEO Enhancements -->
+		<meta name="revisit-after" content="7 days" />
+		<meta name="rating" content="general" />
 
-        .sections-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+		<!-- External Dependencies -->
+		<script src="https://cdn.jsdelivr.net/npm/qs@latest/dist/qs.min.js"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+			rel="stylesheet"
+		/>
 
-        .section {
-            flex: 1;
-            min-width: 300px;
-        }
+		<!-- Custom Styles and Scripts -->
+		<link rel="stylesheet" href="./assets/css/styles.css" />
+	</head>
+	<body>
+		<div class="container">
+			<h1>QS Encoder/Decoder</h1>
 
-        .section-title {
-            font-size: 1.5em;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--primary-color);
-        }
+			<div class="sections-container">
+				<!-- Encode Section -->
+				<div class="section">
+					<h2 class="section-title">Encode</h2>
+					<div class="input-group">
+						<label for="encode-input">Input:</label>
+						<textarea
+							id="encode-input"
+							placeholder="Enter text to encode..."
+						></textarea>
+						<div id="encode-error" class="error">
+							Invalid input format
+						</div>
+					</div>
 
-        h1 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 30px;
-        }
+					<div class="button-group">
+						<div class="toggle-container">
+							<span class="toggle-label">URL Encode:</span>
+							<label class="toggle-switch">
+								<input
+									type="checkbox"
+									id="url-encode-toggle"
+									onchange="processEncode()"
+									aria-label="Toggle URL encoding"
+									title="Toggle URL encoding"
+								/>
+								<span class="toggle-slider"></span>
+							</label>
+						</div>
+					</div>
 
-        .input-group {
-            margin-bottom: 20px;
-        }
+					<div class="input-group">
+						<label for="encode-output">Output:</label>
+						<textarea id="encode-output" readonly></textarea>
+					</div>
+				</div>
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
+				<!-- Decode Section -->
+				<div class="section">
+					<h2 class="section-title">Decode</h2>
+					<div class="input-group">
+						<label for="decode-input">Input:</label>
+						<textarea
+							id="decode-input"
+							placeholder="Enter text to decode..."
+						></textarea>
+						<div id="decode-error" class="error">
+							Invalid input format
+						</div>
+					</div>
 
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-family: monospace;
-            resize: vertical;
-            margin-bottom: 10px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-sizing: border-box;
-        }
+					<div class="button-group">
+						<div class="toggle-container">
+							<span class="toggle-label">URL Decode:</span>
+							<label class="toggle-switch">
+								<input
+									type="checkbox"
+									id="url-decode-toggle"
+									onchange="processDecode()"
+									aria-label="Toggle URL decoding"
+									title="Toggle URL decoding"
+								/>
+								<span class="toggle-slider"></span>
+							</label>
+						</div>
+					</div>
 
-        textarea:focus {
-            outline: 2px solid var(--primary-color);
-            outline-offset: 2px;
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-        }
+					<div class="input-group">
+						<label for="decode-output">Output:</label>
+						<textarea id="decode-output" readonly></textarea>
+					</div>
+				</div>
+			</div>
 
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
+			<div class="button-group top-margin">
+				<button onclick="clearAll()">Clear All</button>
+			</div>
 
-        .button-group.top-margin {
-            margin-top: 20px;
-        }
+			<div class="footer">
+				Created by
+				<a
+					href="https://www.linkedin.com/in/daniel-s-764184210/"
+					target="_blank"
+					rel="noopener noreferrer"
+					>Daniel S.</a
+				>
+				| Powered by
+				<a
+					href="https://www.npmjs.com/package/qs"
+					target="_blank"
+					rel="noopener noreferrer"
+					>qs library</a
+				>
+			</div>
+		</div>
 
-        button {
-            padding: 10px 20px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            flex: 1;
-            min-width: 120px;
-        }
-
-        button:hover {
-            background-color: #357abd;
-        }
-
-        button:focus {
-            outline: 2px solid #1a365d;
-            outline-offset: 2px;
-        }
-
-        .error {
-            color: #dc3545;
-            margin-top: 5px;
-            font-size: 14px;
-            display: none;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            font-size: 0.9em;
-            color: #666;
-        }
-
-        .footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer a:hover {
-            color: #357abd;
-            text-decoration: underline;
-        }
-
-        /* Toggle Switch Styles */
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-        }
-
-        .toggle-label {
-            font-size: 14px;
-            color: var(--text-color);
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background-color: var(--primary-color);
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>QS Encoder/Decoder</h1>
-        
-        <div class="sections-container">
-            <!-- Encode Section -->
-            <div class="section">
-                <h2 class="section-title">Encode</h2>
-                <div class="input-group">
-                    <label for="encode-input">Input:</label>
-                    <textarea id="encode-input" placeholder="Enter text to encode..."></textarea>
-                    <div id="encode-error" class="error">Invalid input format</div>
-                </div>
-
-                <div class="button-group">
-                    <div class="toggle-container">
-                        <span class="toggle-label">URL Encode:</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="url-encode-toggle" onchange="processEncode()"
-                                   aria-label="Toggle URL encoding" title="Toggle URL encoding">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label for="encode-output">Output:</label>
-                    <textarea id="encode-output" readonly></textarea>
-                </div>
-            </div>
-
-            <!-- Decode Section -->
-            <div class="section">
-                <h2 class="section-title">Decode</h2>
-                <div class="input-group">
-                    <label for="decode-input">Input:</label>
-                    <textarea id="decode-input" placeholder="Enter text to decode..."></textarea>
-                    <div id="decode-error" class="error">Invalid input format</div>
-                </div>
-
-                <div class="button-group">
-                    <div class="toggle-container">
-                        <span class="toggle-label">URL Decode:</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="url-decode-toggle" onchange="processDecode()"
-                                   aria-label="Toggle URL decoding" title="Toggle URL decoding">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label for="decode-output">Output:</label>
-                    <textarea id="decode-output" readonly></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="button-group top-margin">
-            <button onclick="clearAll()">Clear All</button>
-        </div>
-
-        <div class="footer">
-            Created by <a href="https://www.linkedin.com/in/daniel-s-764184210/" target="_blank" rel="noopener noreferrer">Daniel S.</a> | Powered by <a href="https://www.npmjs.com/package/qs" target="_blank" rel="noopener noreferrer">qs library</a>
-        </div>
-    </div>
-
-    <script>
-        // Add input event listeners for real-time processing
-        document.getElementById('encode-input').addEventListener('input', processEncode);
-        document.getElementById('decode-input').addEventListener('input', processDecode);
-
-        function processEncode() {
-            const input = document.getElementById('encode-input').value;
-            const error = document.getElementById('encode-error');
-            const urlToggle = document.getElementById('url-encode-toggle').checked;
-            
-            if (!input) {
-                document.getElementById('encode-output').value = '';
-                error.style.display = 'none';
-                return;
-            }
-
-            try {
-                // Always do QS encoding first
-                const parsed = JSON.parse(input);
-                let result = Qs.stringify(parsed);
-                
-                // Then URL encode if toggle is on
-                if (urlToggle) {
-                    result = encodeURIComponent(result);
-                }
-                
-                document.getElementById('encode-output').value = result;
-                error.style.display = 'none';
-            } catch (e) {
-                error.style.display = 'block';
-                error.textContent = 'Please enter valid JSON';
-            }
-        }
-
-        function processDecode() {
-            const input = document.getElementById('decode-input').value;
-            const error = document.getElementById('decode-error');
-            const urlToggle = document.getElementById('url-decode-toggle').checked;
-            
-            if (!input) {
-                document.getElementById('decode-output').value = '';
-                error.style.display = 'none';
-                return;
-            }
-
-            try {
-                let result = input;
-                
-                // URL decode first if toggle is on
-                if (urlToggle) {
-                    result = decodeURIComponent(result);
-                }
-                
-                // Always do QS decoding
-                const decoded = Qs.parse(result);
-                document.getElementById('decode-output').value = JSON.stringify(decoded, null, 2);
-                error.style.display = 'none';
-            } catch (e) {
-                error.style.display = 'block';
-                error.textContent = 'Invalid input format';
-            }
-        }
-
-        function clearAll() {
-            ['encode-input', 'encode-output', 'decode-input', 'decode-output'].forEach(id => {
-                document.getElementById(id).value = '';
-            });
-            ['url-encode-toggle', 'url-decode-toggle'].forEach(id => {
-                document.getElementById(id).checked = false;
-            });
-            ['encode-error', 'decode-error'].forEach(id => {
-                document.getElementById(id).style.display = 'none';
-            });
-        }
-    </script>
-</body>
-</html> 
+		<script src="./assets/js/main.js"></script>
+	</body>
+</html>
