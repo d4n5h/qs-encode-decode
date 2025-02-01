@@ -9,7 +9,7 @@
     <meta name="title" content="QS Encoder/Decoder - Convert Query Strings and URLs">
     <meta name="description" content="Free online tool to encode and decode query strings and URLs. Convert between JSON and query string formats easily with this web utility.">
     <meta name="keywords" content="query string,qs, encode, decode, JSON to query string, query string to json, web development tools, QS library, online encoder decoder">
-    <meta name="author" content="Daniel S.">
+    <meta name="author" content="Daniel Smith">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph / Facebook -->
@@ -17,14 +17,14 @@
     <meta property="og:url" content="https://d4n5h.github.io/qs-encode-decode/">
     <meta property="og:title" content="QS Encoder/Decoder - Convert Query Strings and URLs">
     <meta property="og:description" content="Free online tool to encode and decode query strings and URLs. Convert between JSON and query string formats easily with this web utility.">
-    <meta property="og:image" content="./images/icon.png">
+    <meta property="og:image" content="https://d4n5h.github.io/qs-encode-decode/images/icon.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://d4n5h.github.io/qs-encode-decode/">
     <meta property="twitter:title" content="QS Encoder/Decoder - Convert Query Strings and URLs">
     <meta property="twitter:description" content="Free online tool to encode and decode query strings and URLs. Convert between JSON and query string formats easily with this web utility.">
-    <meta property="twitter:image" content="./images/icon.png">
+    <meta property="twitter:image" content="https://d4n5h.github.io/qs-encode-decode/images/icon.png">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
@@ -34,6 +34,13 @@
     
     <!-- Canonical URL -->
     <meta rel="canonical" href="https://d4n5h.github.io/qs-encode-decode/">
+
+    <!-- Add language directive -->
+    <meta http-equiv="Content-Language" content="en">
+
+    <!-- SEO Enhancements -->
+    <meta name="revisit-after" content="7 days">
+    <meta name="rating" content="general">
 
     <script src="https://cdn.jsdelivr.net/npm/qs@latest/dist/qs.min.js"></script>
     <style>
@@ -105,11 +112,15 @@
             font-family: monospace;
             resize: vertical;
             margin-bottom: 10px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+            max-width: 100%;
         }
 
         textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
         }
 
         .button-group {
@@ -137,6 +148,11 @@
 
         button:hover {
             background-color: #357abd;
+        }
+
+        button:focus {
+            outline: 2px solid #1a365d;
+            outline-offset: 2px;
         }
 
         .error {
@@ -224,18 +240,23 @@
 
     <script>
         function qsEncode() {
-            const input = document.getElementById('encode-input').value;
+            const input = document.getElementById('encode-input').value.trim();
             const error = document.getElementById('encode-error');
             
+            if (!input) {
+                error.textContent = 'Please enter some text to encode';
+                error.style.display = 'block';
+                return;
+            }
+            
             try {
-                // Try to parse the input as JSON
                 const parsed = JSON.parse(input);
-                const encoded = Qs.stringify(parsed);
+                const encoded = Qs.stringify(parsed, { encode: false, format: 'RFC1738' });
                 document.getElementById('encode-output').value = encoded;
                 error.style.display = 'none';
             } catch (e) {
                 error.style.display = 'block';
-                error.textContent = 'Please enter valid JSON';
+                error.textContent = `JSON Error: ${e.message}`;
             }
         }
 
@@ -253,9 +274,20 @@
             }
         }
 
+        function validateInput(input, errorElement) {
+            if (!input.trim()) {
+                errorElement.textContent = 'Please enter some text';
+                errorElement.style.display = 'block';
+                return false;
+            }
+            return true;
+        }
+
         function urlEncode() {
             const input = document.getElementById('encode-input').value;
             const error = document.getElementById('encode-error');
+            
+            if (!validateInput(input, error)) return;
             
             try {
                 const encoded = encodeURIComponent(input);
@@ -263,21 +295,28 @@
                 error.style.display = 'none';
             } catch (e) {
                 error.style.display = 'block';
-                error.textContent = 'Invalid input for URL encoding';
+                error.textContent = `Encoding Error: ${e.message}`;
             }
         }
 
         function urlDecode() {
-            const input = document.getElementById('decode-input').value;
+            const input = document.getElementById('decode-input').value.trim();
             const error = document.getElementById('decode-error');
             
+            if (!input) {
+                error.textContent = 'Please enter some text to decode';
+                error.style.display = 'block';
+                return;
+            }
+
             try {
-                const decoded = decodeURIComponent(input);
+                // Handle plus signs as spaces
+                const decoded = decodeURIComponent(input.replace(/\+/g, '%20'));
                 document.getElementById('decode-output').value = decoded;
                 error.style.display = 'none';
             } catch (e) {
                 error.style.display = 'block';
-                error.textContent = 'Invalid URL encoded string';
+                error.textContent = `Decoding Error: ${e.message}`;
             }
         }
 
