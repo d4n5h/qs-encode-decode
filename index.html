@@ -113,8 +113,6 @@
             resize: vertical;
             margin-bottom: 10px;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-sizing: border-box;
-            max-width: 100%;
         }
 
         textarea:focus {
@@ -128,6 +126,7 @@
             gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .button-group.top-margin {
@@ -181,6 +180,64 @@
             color: #357abd;
             text-decoration: underline;
         }
+
+        /* Toggle Switch Styles */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
     </style>
 </head>
 <body>
@@ -198,8 +255,14 @@
                 </div>
 
                 <div class="button-group">
-                    <button onclick="qsEncode()">QS Encode</button>
-                    <button onclick="urlEncode()">URL Encode</button>
+                    <div class="toggle-container">
+                        <span class="toggle-label">URL Encode:</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="url-encode-toggle" onchange="processEncode()"
+                                   aria-label="Toggle URL encoding" title="Toggle URL encoding">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="input-group">
@@ -218,8 +281,14 @@
                 </div>
 
                 <div class="button-group">
-                    <button onclick="qsDecode()">QS Decode</button>
-                    <button onclick="urlDecode()">URL Decode</button>
+                    <div class="toggle-container">
+                        <span class="toggle-label">URL Decode:</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="url-decode-toggle" onchange="processDecode()"
+                                   aria-label="Toggle URL decoding" title="Toggle URL decoding">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="input-group">
@@ -239,94 +308,78 @@
     </div>
 
     <script>
-        function qsEncode() {
-            const input = document.getElementById('encode-input').value.trim();
+        // Add input event listeners for real-time processing
+        document.getElementById('encode-input').addEventListener('input', processEncode);
+        document.getElementById('decode-input').addEventListener('input', processDecode);
+
+        function processEncode() {
+            const input = document.getElementById('encode-input').value;
             const error = document.getElementById('encode-error');
+            const urlToggle = document.getElementById('url-encode-toggle').checked;
             
             if (!input) {
-                error.textContent = 'Please enter some text to encode';
-                error.style.display = 'block';
+                document.getElementById('encode-output').value = '';
+                error.style.display = 'none';
                 return;
             }
-            
+
             try {
+                // Always do QS encoding first
                 const parsed = JSON.parse(input);
-                const encoded = Qs.stringify(parsed, { encode: false, format: 'RFC1738' });
-                document.getElementById('encode-output').value = encoded;
+                let result = Qs.stringify(parsed);
+                
+                // Then URL encode if toggle is on
+                if (urlToggle) {
+                    result = encodeURIComponent(result);
+                }
+                
+                document.getElementById('encode-output').value = result;
                 error.style.display = 'none';
             } catch (e) {
                 error.style.display = 'block';
-                error.textContent = `JSON Error: ${e.message}`;
+                error.textContent = 'Please enter valid JSON';
             }
         }
 
-        function qsDecode() {
+        function processDecode() {
             const input = document.getElementById('decode-input').value;
             const error = document.getElementById('decode-error');
+            const urlToggle = document.getElementById('url-decode-toggle').checked;
             
+            if (!input) {
+                document.getElementById('decode-output').value = '';
+                error.style.display = 'none';
+                return;
+            }
+
             try {
-                const decoded = Qs.parse(input);
+                let result = input;
+                
+                // URL decode first if toggle is on
+                if (urlToggle) {
+                    result = decodeURIComponent(result);
+                }
+                
+                // Always do QS decoding
+                const decoded = Qs.parse(result);
                 document.getElementById('decode-output').value = JSON.stringify(decoded, null, 2);
                 error.style.display = 'none';
             } catch (e) {
                 error.style.display = 'block';
-                error.textContent = 'Invalid query string format';
-            }
-        }
-
-        function validateInput(input, errorElement) {
-            if (!input.trim()) {
-                errorElement.textContent = 'Please enter some text';
-                errorElement.style.display = 'block';
-                return false;
-            }
-            return true;
-        }
-
-        function urlEncode() {
-            const input = document.getElementById('encode-input').value;
-            const error = document.getElementById('encode-error');
-            
-            if (!validateInput(input, error)) return;
-            
-            try {
-                const encoded = encodeURIComponent(input);
-                document.getElementById('encode-output').value = encoded;
-                error.style.display = 'none';
-            } catch (e) {
-                error.style.display = 'block';
-                error.textContent = `Encoding Error: ${e.message}`;
-            }
-        }
-
-        function urlDecode() {
-            const input = document.getElementById('decode-input').value.trim();
-            const error = document.getElementById('decode-error');
-            
-            if (!input) {
-                error.textContent = 'Please enter some text to decode';
-                error.style.display = 'block';
-                return;
-            }
-
-            try {
-                // Handle plus signs as spaces
-                const decoded = decodeURIComponent(input.replace(/\+/g, '%20'));
-                document.getElementById('decode-output').value = decoded;
-                error.style.display = 'none';
-            } catch (e) {
-                error.style.display = 'block';
-                error.textContent = `Decoding Error: ${e.message}`;
+                error.textContent = 'Invalid input format';
             }
         }
 
         function clearAll() {
-            document.getElementById('encode-input').value = '';
-            document.getElementById('encode-output').value = '';
-            document.getElementById('decode-input').value = '';
-            document.getElementById('decode-output').value = '';
-            document.getElementById('encode-error').style.display = 'none';
-            document.getElementById('decode-error').style.display = 'none';
+            ['encode-input', 'encode-output', 'decode-input', 'decode-output'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            ['url-encode-toggle', 'url-decode-toggle'].forEach(id => {
+                document.getElementById(id).checked = false;
+            });
+            ['encode-error', 'decode-error'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
         }
     </script>
 </body>
